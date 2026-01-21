@@ -34,7 +34,7 @@ export function LanguageSelector() {
             }`}
           >
             <div className="flex items-center gap-3">
-              <span className="text-2xl">🇬🇧</span>
+              <span className="text-2xl">🇺🇸</span>
               <div className="text-left">
                 <p className="font-semibold text-foreground">English</p>
                 <p className="text-sm text-muted-foreground">Continue in English</p>

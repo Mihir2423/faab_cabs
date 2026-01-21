@@ -83,7 +83,7 @@ export function Header() {
                     }}
                     className={`w-full px-4 py-2 text-left hover:bg-secondary/50 flex items-center gap-2 ${language === "en" ? "text-primary font-medium" : ""}`}
                   >
-                    <span>🇬🇧</span> English
+                    <span>🇺🇸</span> English
                   </button>
                   <button
                     onClick={() => {
