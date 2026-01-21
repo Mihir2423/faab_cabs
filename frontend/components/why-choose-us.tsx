@@ -1,48 +1,53 @@
+"use client"
+
+import { useLanguage } from "@/contexts/language-context"
 import { Shield, CreditCard, Headphones, MapPin, Clock, Award } from "lucide-react"
 
-const features = [
-  {
-    icon: CreditCard,
-    title: "Transparent Pricing",
-    description: "All-inclusive fares with no hidden charges. Fuel, tolls, taxes & driver allowance included.",
-  },
-  {
-    icon: Shield,
-    title: "Safe & Verified",
-    description: "30-point verification for all cars & drivers. GPS-enabled vehicles for your safety.",
-  },
-  {
-    icon: Headphones,
-    title: "24/7 Support",
-    description: "Round-the-clock customer support to assist you before, during & after your trip.",
-  },
-  {
-    icon: MapPin,
-    title: "Bihar-Wide Coverage",
-    description: "Available across 50+ cities covering 500+ routes throughout Bihar.",
-  },
-  {
-    icon: Clock,
-    title: "On-Time Guarantee",
-    description: "Punctual pickups with real-time tracking. Never miss your train or meeting.",
-  },
-  {
-    icon: Award,
-    title: "Quality Assured",
-    description: "Clean, sanitized & well-maintained vehicles with professional chauffeurs.",
-  },
-]
-
 export function WhyChooseUs() {
+  const { t } = useLanguage()
+
+  const features = [
+    {
+      icon: CreditCard,
+      title: t("transparent_pricing"),
+      description: t("transparent_desc"),
+    },
+    {
+      icon: Shield,
+      title: t("verified_drivers"),
+      description: t("verified_desc"),
+    },
+    {
+      icon: Headphones,
+      title: t("support_24_7"),
+      description: t("support_desc"),
+    },
+    {
+      icon: MapPin,
+      title: t("cities_covered"),
+      description: "50+ cities, 500+ routes",
+    },
+    {
+      icon: Clock,
+      title: "On-Time Guarantee",
+      description: "Punctual pickups with real-time tracking.",
+    },
+    {
+      icon: Award,
+      title: t("flexible_booking"),
+      description: t("flexible_desc"),
+    },
+  ]
+
   return (
     <section className="py-16 md:py-24 bg-background">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-4">
-            Why Choose Fab Cabs?
+            {t("why_choose_us")}
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Experience the difference with Bihar's most trusted car rental service
+            {t("why_choose_subtitle")}
           </p>
         </div>
 
@@ -67,19 +72,19 @@ export function WhyChooseUs() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div>
               <p className="text-3xl md:text-4xl font-bold text-primary-foreground">50+</p>
-              <p className="text-primary-foreground/80 text-sm mt-1">Cities Covered</p>
+              <p className="text-primary-foreground/80 text-sm mt-1">{t("cities_covered")}</p>
             </div>
             <div>
               <p className="text-3xl md:text-4xl font-bold text-primary-foreground">500+</p>
-              <p className="text-primary-foreground/80 text-sm mt-1">Routes Available</p>
+              <p className="text-primary-foreground/80 text-sm mt-1">{t("routes")}</p>
             </div>
             <div>
               <p className="text-3xl md:text-4xl font-bold text-primary-foreground">50K+</p>
-              <p className="text-primary-foreground/80 text-sm mt-1">Happy Customers</p>
+              <p className="text-primary-foreground/80 text-sm mt-1">{t("happy_customers")}</p>
             </div>
             <div>
               <p className="text-3xl md:text-4xl font-bold text-primary-foreground">4.8</p>
-              <p className="text-primary-foreground/80 text-sm mt-1">Average Rating</p>
+              <p className="text-primary-foreground/80 text-sm mt-1">Rating</p>
             </div>
           </div>
         </div>

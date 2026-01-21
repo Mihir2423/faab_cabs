@@ -1,7 +1,12 @@
+"use client"
+
 import Link from "next/link"
+import { useLanguage } from "@/contexts/language-context"
 import { Phone, Mail, MapPin, Facebook, Twitter, Instagram, Linkedin, Youtube } from "lucide-react"
 
 export function Footer() {
+  const { t } = useLanguage()
+
   return (
     <footer className="bg-foreground text-background">
       <div className="container mx-auto px-4 py-12 md:py-16">
@@ -12,7 +17,7 @@ export function Footer() {
               FAB CABS
             </div>
             <p className="text-background/70 text-sm mb-4">
-              Bihar's trusted inter-city car rental service with 50+ cities and 500+ routes.
+              {t("footer_desc")}
             </p>
             <div className="flex gap-3">
               <a href="#" className="h-9 w-9 rounded-full bg-background/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors">
@@ -35,19 +40,19 @@ export function Footer() {
 
           {/* Services */}
           <div>
-            <h4 className="font-semibold mb-4">Services</h4>
+            <h4 className="font-semibold mb-4">{t("services")}</h4>
             <ul className="space-y-2 text-sm text-background/70">
-              <li><Link href="#" className="hover:text-primary transition-colors">Outstation Cabs</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">Local Rentals</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">Airport Transfer</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">One Way Cabs</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">Tempo Traveller</Link></li>
+              <li><Link href="#" className="hover:text-primary transition-colors">{t("outstation_cabs")}</Link></li>
+              <li><Link href="#" className="hover:text-primary transition-colors">{t("local_rentals")}</Link></li>
+              <li><Link href="#" className="hover:text-primary transition-colors">{t("airport_transfers")}</Link></li>
+              <li><Link href="#" className="hover:text-primary transition-colors">{t("one_way_cabs")}</Link></li>
+              <li><Link href="#" className="hover:text-primary transition-colors">{t("tempo_traveller")}</Link></li>
             </ul>
           </div>
 
           {/* Popular Cities */}
           <div>
-            <h4 className="font-semibold mb-4">Popular Cities</h4>
+            <h4 className="font-semibold mb-4">{t("popular_cities")}</h4>
             <ul className="space-y-2 text-sm text-background/70">
               <li><Link href="#" className="hover:text-primary transition-colors">Patna</Link></li>
               <li><Link href="#" className="hover:text-primary transition-colors">Gaya</Link></li>
@@ -59,19 +64,19 @@ export function Footer() {
 
           {/* Company */}
           <div>
-            <h4 className="font-semibold mb-4">Company</h4>
+            <h4 className="font-semibold mb-4">{t("company")}</h4>
             <ul className="space-y-2 text-sm text-background/70">
-              <li><Link href="#" className="hover:text-primary transition-colors">About Us</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">Careers</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">Blog</Link></li>
+              <li><Link href="#" className="hover:text-primary transition-colors">{t("about_us")}</Link></li>
+              <li><Link href="#" className="hover:text-primary transition-colors">{t("careers")}</Link></li>
+              <li><Link href="#" className="hover:text-primary transition-colors">{t("blog")}</Link></li>
               <li><Link href="#" className="hover:text-primary transition-colors">Partner With Us</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">Contact</Link></li>
+              <li><Link href="#" className="hover:text-primary transition-colors">{t("contact_us")}</Link></li>
             </ul>
           </div>
 
           {/* Contact */}
           <div>
-            <h4 className="font-semibold mb-4">Contact Us</h4>
+            <h4 className="font-semibold mb-4">{t("contact")}</h4>
             <ul className="space-y-3 text-sm text-background/70">
               <li className="flex items-center gap-2">
                 <Phone className="h-4 w-4 text-primary" />
@@ -93,7 +98,7 @@ export function Footer() {
         <div className="border-t border-background/10 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-sm text-background/60">
-              © 2026 Fab Cabs Pvt. Ltd. All rights reserved.
+              © 2026 Fab Cabs Pvt. Ltd. {t("all_rights_reserved")}
             </p>
             <div className="flex flex-wrap justify-center gap-4 text-sm text-background/60">
               <Link href="#" className="hover:text-primary transition-colors">Privacy Policy</Link>

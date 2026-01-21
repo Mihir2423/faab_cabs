@@ -1,54 +1,59 @@
+"use client"
+
+import { useLanguage } from "@/contexts/language-context"
 import { Car, Plane, Clock, Users, Sparkles, Shield } from "lucide-react"
 
-const services = [
-  {
-    icon: Car,
-    title: "Outstation Cabs",
-    description: "One-way & round trip cabs to 7500+ destinations across India",
-    highlight: "Starting ₹9/km",
-  },
-  {
-    icon: Plane,
-    title: "Airport Transfer",
-    description: "Reliable airport pickup & drop services across all major airports",
-    highlight: "On-time guarantee",
-  },
-  {
-    icon: Clock,
-    title: "Local Rentals",
-    description: "Hourly rental packages for local city travel needs",
-    highlight: "4hr, 8hr, 12hr packs",
-  },
-  {
-    icon: Users,
-    title: "Tempo Traveller",
-    description: "12-26 seater vehicles for group travel and family trips",
-    highlight: "From ₹21/km",
-  },
-  {
-    icon: Sparkles,
-    title: "Luxury Cars",
-    description: "Premium sedans & SUVs for corporate & special occasions",
-    highlight: "Innova, Fortuner & more",
-  },
-  {
-    icon: Shield,
-    title: "Safe & Sanitized",
-    description: "All vehicles undergo 30-point verification & sanitization",
-    highlight: "100% verified drivers",
-  },
-]
-
 export function ServicesSection() {
+  const { t } = useLanguage()
+
+  const services = [
+    {
+      icon: Car,
+      title: t("outstation_cabs"),
+      description: t("outstation_desc"),
+      highlight: "₹9/km",
+    },
+    {
+      icon: Plane,
+      title: t("airport_transfer"),
+      description: t("airport_desc"),
+      highlight: "On-time",
+    },
+    {
+      icon: Clock,
+      title: t("local_rentals"),
+      description: t("local_desc"),
+      highlight: "4hr, 8hr, 12hr",
+    },
+    {
+      icon: Users,
+      title: t("tempo_traveller"),
+      description: t("tempo_desc"),
+      highlight: "₹21/km",
+    },
+    {
+      icon: Sparkles,
+      title: t("luxury"),
+      description: t("luxury_desc"),
+      highlight: "Premium",
+    },
+    {
+      icon: Shield,
+      title: t("safe_travel"),
+      description: t("safe_desc"),
+      highlight: "100%",
+    },
+  ]
+
   return (
     <section className="py-16 md:py-24 bg-background">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-4">
-            Our Services
+            {t("our_services")}
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Choose from a wide range of car rental services tailored to meet all your travel needs
+            {t("services_subtitle")}
           </p>
         </div>
 
