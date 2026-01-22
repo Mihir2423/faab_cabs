@@ -6,12 +6,12 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 
 const popularRoutes = [
-  { from: "Patna", to: "Gaya", distance: "105 km", price: "₹1,999", duration: "2h 30m", rating: 4.8 },
-  { from: "Patna", to: "Muzaffarpur", distance: "80 km", price: "₹1,699", duration: "2h", rating: 4.9 },
-  { from: "Patna", to: "Bhagalpur", distance: "230 km", price: "₹3,499", duration: "4h 30m", rating: 4.7 },
-  { from: "Gaya", to: "Bodhgaya", distance: "15 km", price: "₹499", duration: "30m", rating: 4.9 },
-  { from: "Patna", to: "Varanasi", distance: "290 km", price: "₹4,299", duration: "5h 30m", rating: 4.8 },
-  { from: "Patna", to: "Darbhanga", distance: "140 km", price: "₹2,499", duration: "3h", rating: 4.7 },
+  { from: "Jamui", to: "Patna", distance: "360 km", price: "₹2,799", duration: "3h", rating: 4.8 },
+  { from: "Bhagalpur", to: "Deoghar", distance: "270 km", price: "₹1,999", duration: "1h 40m", rating: 4.8 },
+  { from: "Jamui", to: "Ayodhya", distance: "1200 km", price: "₹9,999", duration: "8h 30m", rating: 4.7 },
+  { from: "Lakhisarai", to: "Patna", distance: "270 km", price: "1,999", duration: "2h 20m", rating: 4.9 },
+  { from: "Jamshedpur", to: "Ranchi", distance: "120 km", price: "₹1,499", duration: "1h 40m", rating: 4.7 },
+  { from: "Jamui", to: "Deoghar", distance: "200 km", price: "₹1,499", duration: "2h", rating: 4.9 },
 ]
 
 export function PopularRoutes() {
@@ -25,9 +25,6 @@ export function PopularRoutes() {
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-4">
               {t("popular_routes")}
             </h2>
-            <p className="text-muted-foreground max-w-xl">
-              {t("popular_routes_subtitle")}
-            </p>
           </div>
           <Button variant="outline" className="w-fit border-accent text-accent hover:bg-accent hover:text-accent-foreground bg-transparent">
             {t("view_all_routes")} <ArrowRight className="ml-2 h-4 w-4" />

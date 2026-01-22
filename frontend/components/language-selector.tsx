@@ -82,7 +82,7 @@ export function LanguageSelector() {
         </Button>
 
         <p className="text-center text-xs text-muted-foreground mt-4">
-          FAB CABS - Bihar's Trusted Car Rental Service
+        FAAB CABS - Your Trusted Car Partner & Rental Service
         </p>
       </div>
     </div>

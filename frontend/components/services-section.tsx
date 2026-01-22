@@ -1,17 +1,23 @@
 "use client"
 
 import { useLanguage } from "@/contexts/language-context"
-import { Car, Plane, Clock, Users, Sparkles, Shield } from "lucide-react"
+import { MapPin, ArrowRight, Plane, Clock, Briefcase, Users } from "lucide-react"
 
 export function ServicesSection() {
   const { t } = useLanguage()
 
   const services = [
     {
-      icon: Car,
+      icon: MapPin,
       title: t("outstation_cabs"),
       description: t("outstation_desc"),
       highlight: "₹9/km",
+    },
+    {
+      icon: ArrowRight,
+      title: t("one_way_cabs"),
+      description: t("one_way_desc"),
+      highlight: "Best Price",
     },
     {
       icon: Plane,
@@ -26,22 +32,16 @@ export function ServicesSection() {
       highlight: "4hr, 8hr, 12hr",
     },
     {
+      icon: Briefcase,
+      title: t("corporate_car_rental"),
+      description: t("corporate_desc"),
+      highlight: "Corporate",
+    },
+    {
       icon: Users,
-      title: t("tempo_traveller"),
-      description: t("tempo_desc"),
-      highlight: "₹21/km",
-    },
-    {
-      icon: Sparkles,
-      title: t("luxury"),
-      description: t("luxury_desc"),
-      highlight: "Premium",
-    },
-    {
-      icon: Shield,
-      title: t("safe_travel"),
-      description: t("safe_desc"),
-      highlight: "100%",
+      title: t("bulk_wedding_party"),
+      description: t("bulk_wedding_desc"),
+      highlight: "Bulk Booking",
     },
   ]
 
@@ -52,9 +52,6 @@ export function ServicesSection() {
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-4">
             {t("our_services")}
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            {t("services_subtitle")}
-          </p>
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">

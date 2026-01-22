@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { useLanguage } from "@/contexts/language-context"
 import { Phone, Mail, MapPin, Facebook, Twitter, Instagram, Linkedin, Youtube } from "lucide-react"
 
@@ -13,27 +14,43 @@ export function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8">
           {/* Brand */}
           <div className="col-span-2 lg:col-span-1">
-            <div className="bg-primary text-primary-foreground font-bold text-xl px-3 py-1 rounded inline-block mb-4">
-              FAB CABS
+            <div className="bg-stone-50 rounded-lg p-2 inline-block mb-4">
+              <Image
+                src="/company_logo.png"
+                alt="Fab Cabs Logo"
+                width={120}
+                height={40}
+                className="h-8 md:h-10 w-auto object-contain"
+              />
             </div>
             <p className="text-background/70 text-sm mb-4">
               {t("footer_desc")}
             </p>
             <div className="flex gap-3">
-              <a href="#" className="h-9 w-9 rounded-full bg-background/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors">
+              <a 
+                href="https://www.facebook.com/your-page" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                aria-label="Facebook"
+                className="h-9 w-9 rounded-full bg-background/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
+              >
                 <Facebook className="h-4 w-4" />
               </a>
-              <a href="#" className="h-9 w-9 rounded-full bg-background/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors">
-                <Twitter className="h-4 w-4" />
-              </a>
-              <a href="#" className="h-9 w-9 rounded-full bg-background/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors">
+              <a 
+                href="https://www.instagram.com/fabcab1651/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="h-9 w-9 rounded-full bg-background/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
+              >
                 <Instagram className="h-4 w-4" />
               </a>
-              <a href="#" className="h-9 w-9 rounded-full bg-background/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors">
-                <Linkedin className="h-4 w-4" />
-              </a>
-              <a href="#" className="h-9 w-9 rounded-full bg-background/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors">
-                <Youtube className="h-4 w-4" />
+              <a 
+                href="mailto:fabcab1651@gmail.com" 
+                aria-label="Email"
+                className="h-9 w-9 rounded-full bg-background/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
+              >
+                <Mail className="h-4 w-4" />
               </a>
             </div>
           </div>
@@ -80,15 +97,15 @@ export function Footer() {
             <ul className="space-y-3 text-sm text-background/70">
               <li className="flex items-center gap-2">
                 <Phone className="h-4 w-4 text-primary" />
-                <a href="tel:+919876543210" className="hover:text-primary transition-colors">9876-543-210</a>
+                <a href="tel:+916203493325" className="hover:text-primary transition-colors">+91 6203493325</a>
               </li>
               <li className="flex items-center gap-2">
                 <Mail className="h-4 w-4 text-primary" />
-                <a href="mailto:support@fabcabs.com" className="hover:text-primary transition-colors">support@fabcabs.com</a>
+                <a href="mailto:fabcab1651@gmail.com" className="hover:text-primary transition-colors">fabcab1651@gmail.com</a>
               </li>
               <li className="flex items-start gap-2">
                 <MapPin className="h-4 w-4 text-primary mt-1" />
-                <span>Patna, Bihar, India</span>
+                <span>Jamui, Bihar, India</span>
               </li>
             </ul>
           </div>
@@ -98,7 +115,7 @@ export function Footer() {
         <div className="border-t border-background/10 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-sm text-background/60">
-              © 2026 Fab Cabs Pvt. Ltd. {t("all_rights_reserved")}
+              © 2026 Faab Cabs India LLP. {t("all_rights_reserved")}
             </p>
             <div className="flex flex-wrap justify-center gap-4 text-sm text-background/60">
               <Link href="#" className="hover:text-primary transition-colors">Privacy Policy</Link>

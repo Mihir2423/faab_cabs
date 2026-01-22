@@ -4,6 +4,8 @@ import React from "react"
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
+import Image from "next/image"
 import { useLanguage } from "@/contexts/language-context"
 import { MapPin, Calendar, Clock, ArrowRight, Car, Plane, RotateCcw, Phone, ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -12,14 +14,13 @@ import { cn } from "@/lib/utils"
 
 type TripType = "outstation" | "local" | "airport"
 type OutstationType = "oneway" | "roundtrip"
+type AirportType = "pickup" | "drop"
 
 const carTypes = [
   { id: "sedan", name: "Sedan", nameHi: "सेडान", maxPassengers: 4 },
   { id: "suv", name: "SUV", nameHi: "एसयूवी", maxPassengers: 6 },
-  { id: "innova", name: "Innova", nameHi: "इनोवा", maxPassengers: 7 },
   { id: "innova_crysta", name: "Innova Crysta", nameHi: "इनोवा क्रिस्टा", maxPassengers: 7 },
   { id: "tempo", name: "Tempo Traveller", nameHi: "टेम्पो ट्रैवलर", maxPassengers: 12 },
-  { id: "luxury", name: "Luxury Car", nameHi: "लग्जरी कार", maxPassengers: 4 },
 ]
 
 export function HeroSection() {
@@ -27,6 +28,7 @@ export function HeroSection() {
   const router = useRouter()
   const [tripType, setTripType] = useState<TripType>("outstation")
   const [outstationType, setOutstationType] = useState<OutstationType>("oneway")
+  const [airportType, setAirportType] = useState<AirportType>("pickup")
   const [selectedCar, setSelectedCar] = useState("")
   const [showCarDropdown, setShowCarDropdown] = useState(false)
 
@@ -38,33 +40,72 @@ export function HeroSection() {
   }
 
   return (
-    <section className="relative bg-gradient-to-br from-primary/10 via-background to-accent/5 py-12 md:py-20">
-      <div className="container mx-auto px-4">
+    <section className="relative py-12 md:py-20 overflow-hidden">
+      {/* Background Image */}
+      <div 
+        className="absolute inset-0 z-0"
+        style={{
+          backgroundImage: 'url(/hero_section_2.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}
+      />
+      
+      {/* Gradient Overlay - fades to black on right, with overall transparency */}
+      <div className="absolute inset-0 z-0 bg-gradient-to-r from-background/80 via-background/60 to-black/90" />
+      
+      {/* Additional overlay for text readability */}
+      <div className="absolute inset-0 z-0 bg-background/5" />
+      
+      <div className="container mx-auto px-4 relative z-10">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left Content */}
           <div className="text-center lg:text-left">
+            <div className="flex items-center justify-center lg:justify-start gap-2 mb-4">
+              <Link href="/" className="flex items-center gap-2">
+                <div className="bg-primary text-primary-foreground font-bold text-xl md:text-2xl px-3 py-1 rounded">
+                  FAAB CABS
+                </div>
+              </Link>
+            </div>
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 text-balance">
               {t("hero_title")} <span className="text-accent">{t("hero_highlight")}</span> {t("hero_title_end")}
             </h1>
+            <div className="flex items-center justify-center lg:justify-start gap-2 mb-4">
+              <Image
+                src="/bihar_govt.png"
+                alt="Bihar Government Logo"
+                width={64}
+                height={64}
+                className="object-contain"
+              />
+              <p className="text-muted-foreground text-sm md:text-base">
+                {t("recognized_by")}{" "}
+                <span className="font-semibold text-foreground bg-accent/10 px-2 py-0.5 rounded-md border border-accent/20">
+                  {t("bihar_govt_startup_scheme")}
+                </span>
+              </p>
+            </div>
             <p className="text-muted-foreground text-lg md:text-xl mb-6">
               {t("hero_subtitle")}
             </p>
             <div className="flex flex-wrap justify-center lg:justify-start gap-6 text-sm md:text-base">
               <div className="flex items-center gap-2">
                 <div className="h-10 w-10 rounded-full bg-accent/10 flex items-center justify-center">
-                  <span className="text-accent font-bold">50+</span>
+                  <span className="text-accent font-bold">28+</span>
                 </div>
                 <span className="text-muted-foreground">{t("cities")}</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="h-10 w-10 rounded-full bg-accent/10 flex items-center justify-center">
-                  <span className="text-accent font-bold">500+</span>
+                  <span className="text-accent font-bold">100+</span>
                 </div>
                 <span className="text-muted-foreground">{t("routes")}</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="h-10 w-10 rounded-full bg-accent/10 flex items-center justify-center">
-                  <span className="text-accent font-bold">50K+</span>
+                  <span className="text-accent font-bold">2.5K+</span>
                 </div>
                 <span className="text-muted-foreground">{t("happy_customers")}</span>
               </div>
@@ -72,7 +113,43 @@ export function HeroSection() {
           </div>
 
           {/* Booking Form */}
-          <div className="bg-card rounded-2xl shadow-xl p-6 md:p-8 border border-border">
+          <div className="bg-card rounded-2xl shadow-xl p-6 md:p-8 border border-border relative">
+            {/* Discount Badge - Starburst */}
+            <div className="absolute -top-4 -right-4 z-20 flex flex-col items-center">
+              {/* Grouped Star Container */}
+              <div className="relative -mt-2">
+                {/* Outer stroke layer */}
+                <div
+                  className="w-[116px] h-[116px] bg-red-700 absolute top-0 left-1/2 -translate-x-1/2"
+                  style={{
+                    clipPath:
+                      'polygon(50% 0%, 60% 10%, 75% 5%, 80% 20%, 95% 25%, 85% 40%, 100% 50%, 85% 60%, 95% 75%, 80% 80%, 75% 95%, 60% 90%, 50% 100%, 40% 90%, 25% 95%, 20% 80%, 5% 75%, 15% 60%, 0% 50%, 15% 40%, 5% 25%, 20% 20%, 25% 5%, 40% 10%)',
+                    filter: 'drop-shadow(0 3px 6px rgba(0,0,0,0.5))'
+                  }}
+                />
+                {/* Inner fill layer */}
+                <div
+                  className="w-28 h-28 bg-red-500 flex items-center justify-center text-white relative"
+                  style={{
+                    clipPath:
+                      'polygon(50% 0%, 60% 10%, 75% 5%, 80% 20%, 95% 25%, 85% 40%, 100% 50%, 85% 60%, 95% 75%, 80% 80%, 75% 95%, 60% 90%, 50% 100%, 40% 90%, 25% 95%, 20% 80%, 5% 75%, 15% 60%, 0% 50%, 15% 40%, 5% 25%, 20% 20%, 25% 5%, 40% 10%)',
+                    filter: 'drop-shadow(0 3px 6px rgba(0,0,0,0.5))'
+                  }}
+                >
+                  <div className="text-center font-extrabold">
+                    <div className="text-xs">upto</div>
+                    <div className="text-xl">50%</div>
+                    <div className="text-xs">OFF</div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Text box below star */}
+              <div className="mt-2 bg-red-500 text-white text-[11px] font-bold px-2 py-1 rounded whitespace-nowrap shadow-md z-30">
+                First Booking
+              </div>
+            </div>
+            
             <form onSubmit={handleSubmit}>
               {/* Trip Type Tabs */}
               <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
@@ -155,14 +232,43 @@ export function HeroSection() {
               <div className="space-y-4">
                 {/* Airport-specific field */}
                 {tripType === "airport" ? (
-                  <div className="relative">
-                    <Plane className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-primary" />
-                    <Input
-                      placeholder={t("enter_airport")}
-                      className="pl-10 h-12 bg-secondary/50 border-border focus:border-primary"
-                      required
-                    />
-                  </div>
+                  <>
+                    {/* Pickup/Drop Selection */}
+                    <div className="grid grid-cols-2 gap-4">
+                      <button
+                        type="button"
+                        onClick={() => setAirportType("pickup")}
+                        className={cn(
+                          "flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium transition-all",
+                          airportType === "pickup"
+                            ? "bg-primary text-primary-foreground"
+                            : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
+                        )}
+                      >
+                        {t("pickup")}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setAirportType("drop")}
+                        className={cn(
+                          "flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium transition-all",
+                          airportType === "drop"
+                            ? "bg-primary text-primary-foreground"
+                            : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
+                        )}
+                      >
+                        {t("drop")}
+                      </button>
+                    </div>
+                    <div className="relative">
+                      <Plane className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-primary" />
+                      <Input
+                        placeholder={t("enter_airport")}
+                        className="pl-10 h-12 bg-secondary/50 border-border focus:border-primary"
+                        required
+                      />
+                    </div>
+                  </>
                 ) : (
                   <>
                     <div className="relative">

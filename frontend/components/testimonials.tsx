@@ -9,8 +9,8 @@ const testimonials = [
     location: "Patna",
     rating: 5,
     text: { 
-      en: "Excellent service! The driver was punctual, professional, and the car was immaculate. Booking was seamless and the pricing was exactly as quoted. Highly recommend Fab Cabs!", 
-      hi: "बेहतरीन सेवा! ड्राइवर समय पर थे, पेशेवर थे, और कार बहुत साफ थी। बुकिंग आसान थी और कीमत बिल्कुल वैसी ही थी जैसा बताया गया था। Fab Cabs की सिफारिश करता हूं!" 
+      en: "Excellent service! The driver was punctual, professional, and the car was immaculate. Booking was seamless and the pricing was exactly as quoted. Highly recommend Faab Cabs!", 
+      hi: "बेहतरीन सेवा! ड्राइवर समय पर थे, पेशेवर थे, और कार बहुत साफ थी। बुकिंग आसान थी और कीमत बिल्कुल वैसी ही थी जैसा बताया गया था। Faab Cabs की सिफारिश करता हूं!" 
     },
     trip: "Patna to Gaya",
   },
@@ -19,8 +19,8 @@ const testimonials = [
     location: "Muzaffarpur",
     rating: 5,
     text: { 
-      en: "Used Fab Cabs for my airport pickup at Patna. The driver was waiting when I landed and helped with luggage. Very comfortable ride. Will definitely use again!", 
-      hi: "पटना में एयरपोर्ट पिकअप के लिए Fab Cabs का उपयोग किया। जब मैं उतरी तो ड्राइवर इंतजार कर रहे थे और सामान में मदद की। बहुत आरामदायक सवारी। जरूर फिर से उपयोग करूंगी!" 
+      en: "Used Faab Cabs for my airport pickup at Patna. The driver was waiting when I landed and helped with luggage. Very comfortable ride. Will definitely use again!", 
+      hi: "पटना में एयरपोर्ट पिकअप के लिए Faab Cabs का उपयोग किया। जब मैं उतरी तो ड्राइवर इंतजार कर रहे थे और सामान में मदद की। बहुत आरामदायक सवारी। जरूर फिर से उपयोग करूंगी!" 
     },
     trip: "Patna Airport Transfer",
   },
@@ -33,6 +33,16 @@ const testimonials = [
       hi: "परिवार की तीर्थयात्रा के लिए पटना से वाराणसी का राउंड ट्रिप बुक किया। बढ़िया अनुभव! साफ कार, सुरक्षित ड्राइविंग, और पारदर्शी मूल्य।" 
     },
     trip: "Patna to Varanasi",
+  },
+  {
+    name: "Priya Sharma",
+    location: "Darbhanga",
+    rating: 5,
+    text: { 
+      en: "Amazing experience with Faab Cabs! Booked a local rental for a day trip. The driver was courteous, the car was well-maintained, and the service was exceptional. Worth every rupee!", 
+      hi: "Faab Cabs के साथ शानदार अनुभव! एक दिन की यात्रा के लिए लोकल रेंटल बुक किया। ड्राइवर विनम्र थे, कार अच्छी तरह से रखरखाव की गई थी, और सेवा असाधारण थी। हर रुपये के लायक!" 
+    },
+    trip: "Local Rental - Darbhanga",
   },
 ]
 
@@ -51,28 +61,53 @@ export function Testimonials() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6">
-          {testimonials.map((testimonial, index) => (
-            <div
-              key={index}
-              className="bg-card rounded-xl p-6 border border-border relative"
-            >
-              <Quote className="absolute top-4 right-4 h-8 w-8 text-primary/20" />
-              <div className="flex items-center gap-1 mb-4">
-                {[...Array(testimonial.rating)].map((_, i) => (
-                  <Star key={i} className="h-4 w-4 fill-primary text-primary" />
-                ))}
+        <div className="overflow-hidden relative">
+          <div className="flex animate-scroll gap-6">
+            {/* First set of testimonials */}
+            {testimonials.map((testimonial, index) => (
+              <div
+                key={`first-${index}`}
+                className="flex-shrink-0 w-[90%] sm:w-[400px] bg-card rounded-xl p-6 border border-border relative"
+              >
+                <Quote className="absolute top-4 right-4 h-8 w-8 text-primary/20" />
+                <div className="flex items-center gap-1 mb-4">
+                  {[...Array(testimonial.rating)].map((_, i) => (
+                    <Star key={i} className="h-4 w-4 fill-primary text-primary" />
+                  ))}
+                </div>
+                <p className="text-foreground mb-4 text-sm leading-relaxed">
+                  {`"${testimonial.text[language]}"`}
+                </p>
+                <div className="border-t border-border pt-4">
+                  <p className="font-semibold text-foreground">{testimonial.name}</p>
+                  <p className="text-sm text-muted-foreground">{testimonial.location}</p>
+                  <p className="text-xs text-accent mt-1">{testimonial.trip}</p>
+                </div>
               </div>
-              <p className="text-foreground mb-4 text-sm leading-relaxed">
-                {`"${testimonial.text[language]}"`}
-              </p>
-              <div className="border-t border-border pt-4">
-                <p className="font-semibold text-foreground">{testimonial.name}</p>
-                <p className="text-sm text-muted-foreground">{testimonial.location}</p>
-                <p className="text-xs text-accent mt-1">{testimonial.trip}</p>
+            ))}
+            {/* Duplicate set for seamless infinite scroll */}
+            {testimonials.map((testimonial, index) => (
+              <div
+                key={`second-${index}`}
+                className="flex-shrink-0 w-[90%] sm:w-[400px] bg-card rounded-xl p-6 border border-border relative"
+              >
+                <Quote className="absolute top-4 right-4 h-8 w-8 text-primary/20" />
+                <div className="flex items-center gap-1 mb-4">
+                  {[...Array(testimonial.rating)].map((_, i) => (
+                    <Star key={i} className="h-4 w-4 fill-primary text-primary" />
+                  ))}
+                </div>
+                <p className="text-foreground mb-4 text-sm leading-relaxed">
+                  {`"${testimonial.text[language]}"`}
+                </p>
+                <div className="border-t border-border pt-4">
+                  <p className="font-semibold text-foreground">{testimonial.name}</p>
+                  <p className="text-sm text-muted-foreground">{testimonial.location}</p>
+                  <p className="text-xs text-accent mt-1">{testimonial.trip}</p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>

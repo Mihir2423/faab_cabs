@@ -2,8 +2,9 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { useLanguage } from "@/contexts/language-context"
-import { Menu, X, Phone, ChevronDown, Globe } from "lucide-react"
+import { Menu, X, Phone, ChevronDown, Globe, Instagram, Facebook, Mail } from "lucide-react"
 
 export function Header() {
   const { t, language, setLanguage } = useLanguage()
@@ -15,11 +16,45 @@ export function Header() {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
-            <div className="bg-primary text-primary-foreground font-bold text-xl md:text-2xl px-3 py-1 rounded">
-              FAB CABS
-            </div>
-          </Link>
+          <div className="flex items-center gap-3">
+            <Link href="/" className="flex items-center gap-2">
+              <div className="bg-stone-50 rounded-lg p-2 flex items-center justify-center">
+                <Image
+                  src="/company_logo.png"
+                  alt="Fab Cabs Logo"
+                  width={120}
+                  height={40}
+                  className="h-8 md:h-10 w-auto object-contain"
+                  priority
+                />
+              </div>
+            </Link>
+            <a 
+              href="https://www.facebook.com/your-page" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-foreground hover:text-primary transition-colors"
+              aria-label="Facebook"
+            >
+              <Facebook className="h-5 w-5 md:h-6 md:w-6" />
+            </a>
+            <a 
+              href="https://www.instagram.com/fabcab1651/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-foreground hover:text-primary transition-colors"
+              aria-label="Instagram"
+            >
+              <Instagram className="h-5 w-5 md:h-6 md:w-6" />
+            </a>
+            <a 
+              href="mailto:fabcab1651@gmail.com" 
+              className="text-foreground hover:text-primary transition-colors"
+              aria-label="Email"
+            >
+              <Mail className="h-5 w-5 md:h-6 md:w-6" />
+            </a>
+          </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-8">
@@ -58,9 +93,9 @@ export function Header() {
 
           {/* Contact & Language */}
           <div className="hidden md:flex items-center gap-4">
-            <a href="tel:+919876543210" className="flex items-center gap-2 text-foreground hover:text-primary transition-colors">
+            <a href="tel:+916203493325" className="flex items-center gap-2 text-foreground hover:text-primary transition-colors">
               <Phone className="h-4 w-4" />
-              <span className="font-medium">9876-543-210</span>
+              <span className="font-medium">+91 6203493325</span>
             </a>
             
             {/* Language Switcher */}
@@ -125,9 +160,9 @@ export function Header() {
               <Link href="#" className="text-foreground hover:text-primary transition-colors font-medium py-2">
                 {t("car_types")}
               </Link>
-              <a href="tel:+919876543210" className="flex items-center gap-2 text-foreground hover:text-primary transition-colors py-2">
+              <a href="tel:+916203493325" className="flex items-center gap-2 text-foreground hover:text-primary transition-colors py-2">
                 <Phone className="h-4 w-4" />
-                <span className="font-medium">9876-543-210</span>
+                <span className="font-medium">+91 6203493325</span>
               </a>
               
               {/* Mobile Language Switcher */}

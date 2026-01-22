@@ -46,7 +46,7 @@ export default function ThankYouPage() {
 
         {/* Company Info */}
         <p className="text-sm text-muted-foreground mt-8">
-          FAB CABS - Bihar's Trusted Car Rental Service
+          FAAB CABS - Your Trusted Car Partner & Rental Service
         </p>
       </div>
     </main>

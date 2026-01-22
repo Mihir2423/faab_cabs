@@ -26,18 +26,25 @@ export const translations: Translations = {
   "tempo_traveller": { en: "Tempo Traveller", hi: "टेम्पो ट्रैवलर" },
   
   // Hero Section
-  "hero_title": { en: "Bihar's Trusted", hi: "बिहार की भरोसेमंद" },
+  "hero_title": { en: "Your Trusted", hi: "आपका भरोसेमंद" },
   "hero_highlight": { en: "Inter-City", hi: "इंटर-सिटी" },
-  "hero_title_end": { en: "Car Rental Service", hi: "कार रेंटल सेवा" },
-  "hero_subtitle": { en: "Book cabs across Bihar with transparent pricing, verified drivers & 24/7 support", hi: "पारदर्शी मूल्य, सत्यापित ड्राइवर और 24/7 सहायता के साथ बिहार में कैब बुक करें" },
+  "hero_title_end": { en: "Car Partner", hi: "कार भागीदार" },
+  "recognized_by": { en: "Recognized by", hi: "द्वारा मान्यता प्राप्त" },
+  "bihar_govt_startup_scheme": { en: "Bihar Government Startup Scheme", hi: "बिहार सरकार स्टार्टअप योजना" },
+  "hero_subtitle": { en: "Book cabs across Bihar, Jharkhand, West Bengal and Odisha with transparent pricing, verified drivers & 24/7 support", hi: "पारदर्शी मूल्य, सत्यापित ड्राइवर और 24/7 सहायता के साथ बिहार, झारखंड, पश्चिम बंगाल और ओडिशा में कैब बुक करें" },
   "cities": { en: "Cities", hi: "शहर" },
   "routes": { en: "Routes", hi: "मार्ग" },
   "happy_customers": { en: "Happy Customers", hi: "खुश ग्राहक" },
+  "distance_travelled": { en: "Distance Travelled (km)", hi: "दूरी यात्रा (किमी)" },
+  "total_trips": { en: "Total Trips", hi: "कुल यात्राएं" },
+  "rating": { en: "Rating", hi: "रेटिंग" },
   "outstation": { en: "Outstation", hi: "आउटस्टेशन" },
   "airport": { en: "Airport", hi: "एयरपोर्ट" },
   "one_way": { en: "One Way", hi: "वन वे" },
   "enter_city": { en: "Enter city", hi: "शहर दर्ज करें" },
   "enter_airport": { en: "Enter airport name", hi: "एयरपोर्ट का नाम दर्ज करें" },
+  "pickup": { en: "Pickup", hi: "पिकअप" },
+  "drop": { en: "Drop", hi: "ड्रॉप" },
   "phone_number": { en: "Phone Number", hi: "फोन नंबर" },
   "enter_phone": { en: "Enter WhatsApp number", hi: "व्हाट्सएप नंबर दर्ज करें" },
   "select_car": { en: "Select Car Type", hi: "कार प्रकार चुनें" },
@@ -48,10 +55,14 @@ export const translations: Translations = {
   
   // Services Section
   "our_services": { en: "Our Services", hi: "हमारी सेवाएं" },
-  "services_subtitle": { en: "Reliable car rental solutions for every travel need", hi: "हर यात्रा की जरूरत के लिए विश्वसनीय कार रेंटल समाधान" },
-  "outstation_desc": { en: "One way & round trips to 50+ cities in Bihar and nearby states", hi: "बिहार और आस-पास के राज्यों में 50+ शहरों के लिए वन वे और राउंड ट्रिप" },
+  "outstation_desc": { en: "One way & round trips to 50+ cities in Bihar, Jharkhand, West Bengal and Odisha", hi: "बिहार, झारखंड, पश्चिम बंगाल और ओडिशा में 50+ शहरों के लिए वन वे और राउंड ट्रिप" },
+  "one_way_desc": { en: "Affordable one-way cab services for single direction travel with no return charges", hi: "एक दिशा यात्रा के लिए किफायती वन वे कैब सेवाएं, बिना वापसी शुल्क के" },
   "airport_desc": { en: "Reliable airport pickups and drops at all major airports", hi: "सभी प्रमुख एयरपोर्ट पर विश्वसनीय पिकअप और ड्रॉप" },
   "local_desc": { en: "Hourly rental packages for city tours and local travel", hi: "सिटी टूर और लोकल यात्रा के लिए प्रति घंटा रेंटल पैकेज" },
+  "corporate_car_rental": { en: "Corporate Car Rental", hi: "कॉर्पोरेट कार रेंटल" },
+  "corporate_desc": { en: "Dedicated fleet management and car rental solutions for businesses with flexible plans", hi: "लचीली योजनाओं के साथ व्यवसायों के लिए समर्पित फ्लीट प्रबंधन और कार रेंटल समाधान" },
+  "bulk_wedding_party": { en: "Bulk / Wedding Booking", hi: "बल्क / शादी बुकिंग" },
+  "bulk_wedding_desc": { en: "Special packages for weddings, parties, and bulk bookings with multiple vehicles", hi: "शादी, पार्टी और बल्क बुकिंग के लिए विशेष पैकेज, कई वाहनों के साथ" },
   "tempo_desc": { en: "12 to 26 seater tempo travellers for group travel", hi: "ग्रुप यात्रा के लिए 12 से 26 सीटर टेम्पो ट्रैवलर" },
   "luxury_desc": { en: "Premium cars for business travel and special occasions", hi: "व्यापार यात्रा और विशेष अवसरों के लिए प्रीमियम कारें" },
   "safe_travel": { en: "Safe Travel", hi: "सुरक्षित यात्रा" },
@@ -59,15 +70,13 @@ export const translations: Translations = {
   
   // Popular Routes
   "popular_routes": { en: "Popular Routes", hi: "लोकप्रिय मार्ग" },
-  "popular_routes_subtitle": { en: "Most booked inter-city cab routes in Bihar", hi: "बिहार में सबसे ज्यादा बुक किए जाने वाले इंटर-सिटी कैब मार्ग" },
   "starting_from": { en: "Starting from", hi: "शुरुआत" },
   "book_now": { en: "Book Now", hi: "अभी बुक करें" },
   "view_all_routes": { en: "View All Routes", hi: "सभी मार्ग देखें" },
   "popular_cities": { en: "Popular Cities", hi: "लोकप्रिय शहर" },
   
   // Why Choose Us
-  "why_choose_us": { en: "Why Choose Fab Cabs", hi: "Fab Cabs क्यों चुनें" },
-  "why_choose_subtitle": { en: "Experience the best car rental service in Bihar", hi: "बिहार में सबसे अच्छी कार रेंटल सेवा का अनुभव करें" },
+  "why_choose_us": { en: "Why Choose Faab Cabs", hi: "Faab Cabs क्यों चुनें" },
   "transparent_pricing": { en: "Transparent Pricing", hi: "पारदर्शी मूल्य" },
   "transparent_desc": { en: "No hidden charges. What you see is what you pay. All taxes and tolls included in the fare.", hi: "कोई छुपा शुल्क नहीं। जो आप देखते हैं वही आप भुगतान करते हैं। सभी टैक्स और टोल किराये में शामिल हैं।" },
   "verified_drivers": { en: "Verified Drivers", hi: "सत्यापित ड्राइवर" },
@@ -79,15 +88,18 @@ export const translations: Translations = {
   "trips_completed": { en: "Trips Completed", hi: "यात्राएं पूर्ण" },
   "happy_customers_count": { en: "Happy Customers", hi: "खुश ग्राहक" },
   "cities_covered": { en: "Cities Covered", hi: "शहर कवर" },
+  "cities_desc": { en: "50+ cities, 500+ routes", hi: "50+ शहर, 500+ मार्ग" },
+  "on_time_guarantee": { en: "On-Time Guarantee", hi: "समय पर गारंटी" },
+  "on_time_desc": { en: "Punctual pickups with real-time tracking.", hi: "रियल-टाइम ट्रैकिंग के साथ समय पर पिकअप" },
   "years_experience": { en: "Years Experience", hi: "वर्षों का अनुभव" },
   
   // Testimonials
   "customer_reviews": { en: "Customer Reviews", hi: "ग्राहक समीक्षाएं" },
-  "testimonials_subtitle": { en: "What our customers say about their experience with Fab Cabs", hi: "Fab Cabs के साथ अपने अनुभव के बारे में हमारे ग्राहक क्या कहते हैं" },
+  "testimonials_subtitle": { en: "What our customers say about their experience with Faab Cabs", hi: "Faab Cabs के साथ अपने अनुभव के बारे में हमारे ग्राहक क्या कहते हैं" },
   
   // Contact Section
   "write_to_us": { en: "Write to Us", hi: "हमें लिखें" },
-  "contact_subtitle": { en: "Have a query or feedback? We'd love to hear from you!", hi: "कोई प्रश्न या फीडबैक है? हमें आपसे सुनना अच्छा लगेगा!" },
+  "contact_subtitle": { en: "Have a query or feedback? We'd love to hear from you! For corporate booking, become a partner driver, or sponsorships, reach out to us.", hi: "कोई प्रश्न या फीडबैक है? हमें आपसे सुनना अच्छा लगेगा! कॉर्पोरेट बुकिंग, पार्टनर ड्राइवर बनने, या प्रायोजन के लिए हमसे संपर्क करें।" },
   "your_name": { en: "Your Name", hi: "आपका नाम" },
   "enter_name": { en: "Enter your name", hi: "अपना नाम दर्ज करें" },
   "your_email": { en: "Your Email", hi: "आपका ईमेल" },
@@ -100,7 +112,7 @@ export const translations: Translations = {
   "close": { en: "Close", hi: "बंद करें" },
   
   // Footer
-  "footer_desc": { en: "Bihar's trusted car rental service. Book inter-city cabs, airport transfers, and local rentals with transparent pricing.", hi: "बिहार की भरोसेमंद कार रेंटल सेवा। पारदर्शी मूल्य के साथ इंटर-सिटी कैब, एयरपोर्ट ट्रांसफर और लोकल रेंटल बुक करें।" },
+  "footer_desc": { en: "Your trusted car partner & rental service. Book inter-city cabs, airport transfers, and local rentals with transparent pricing.", hi: "आपका भरोसेमंद कार भागीदार & रेंटल सेवा। पारदर्शी मूल्य के साथ इंटर-सिटी कैब, एयरपोर्ट ट्रांसफर और लोकल रेंटल बुक करें।" },
   "services": { en: "Services", hi: "सेवाएं" },
   "airport_transfers": { en: "Airport Transfers", hi: "एयरपोर्ट ट्रांसफर" },
   "company": { en: "Company", hi: "कंपनी" },

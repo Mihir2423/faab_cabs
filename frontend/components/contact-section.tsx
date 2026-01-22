@@ -43,7 +43,7 @@ export function ContactSection() {
                     <Phone className="h-5 w-5" />
                   </div>
                   <div>
-                    <p className="font-medium">9876-543-210</p>
+                    <p className="font-medium">+91 6203493325</p>
                     <p className="text-sm text-accent-foreground/70">WhatsApp Available</p>
                   </div>
                 </div>
@@ -52,7 +52,7 @@ export function ContactSection() {
                     <Mail className="h-5 w-5" />
                   </div>
                   <div>
-                    <p className="font-medium">info@fabcabs.com</p>
+                    <p className="font-medium">fabcab1651@gmail.com</p>
                     <p className="text-sm text-accent-foreground/70">24/7 Support</p>
                   </div>
                 </div>

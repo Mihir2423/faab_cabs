@@ -15,25 +15,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Fab Cabs - Bihar\'s Trusted Car Rental Service',
+  title: 'Faab Cabs - Bihar\'s Trusted Car Rental Service',
   description: 'Book inter-city cabs, airport transfers, and local rentals across Bihar. Transparent pricing, verified drivers, and 24/7 support.',
   generator: 'v0.app',
   icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/apple-icon.png',
+    icon: '/icon.png',
+    apple: '/icon.png',
   },
 }
 
