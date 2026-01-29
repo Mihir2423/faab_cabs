@@ -23,6 +23,10 @@ const carTypes = [
   { id: "tempo", name: "Tempo Traveller", nameHi: "टेम्पो ट्रैवलर", maxPassengers: 12 },
 ]
 
+const LOCAL_PACKAGES = ["4 hrs / 40 km", "8 hrs / 80 km", "12 hrs / 120 km"] as const
+
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"
+
 export function HeroSection() {
   const { t, language } = useLanguage()
   const router = useRouter()
@@ -31,12 +35,55 @@ export function HeroSection() {
   const [airportType, setAirportType] = useState<AirportType>("pickup")
   const [selectedCar, setSelectedCar] = useState("")
   const [showCarDropdown, setShowCarDropdown] = useState(false)
+  const [fromCity, setFromCity] = useState("")
+  const [toCity, setToCity] = useState("")
+  const [airportName, setAirportName] = useState("")
+  const [date, setDate] = useState("")
+  const [time, setTime] = useState("10:00")
+  const [returnDate, setReturnDate] = useState("")
+  const [localPackage, setLocalPackage] = useState("")
+  const [phone, setPhone] = useState("")
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
 
   const selectedCarData = carTypes.find(car => car.id === selectedCar)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    router.push("/thank-you")
+    setSubmitError(null)
+    setIsSubmitting(true)
+    try {
+      const carDisplay = selectedCarData ? (language === "hi" ? selectedCarData.nameHi : selectedCarData.name) : ""
+      const payload = {
+        tripType,
+        outstationType: tripType === "outstation" ? outstationType : undefined,
+        airportType: tripType === "airport" ? airportType : undefined,
+        fromCity: tripType === "airport" ? "" : fromCity,
+        toCity: tripType === "airport" ? "" : toCity,
+        airportName: tripType === "airport" ? airportName : undefined,
+        date,
+        time,
+        returnDate: tripType === "outstation" && outstationType === "roundtrip" ? returnDate : undefined,
+        localPackage: tripType === "local" ? localPackage : undefined,
+        phone,
+        carType: carDisplay || selectedCar,
+      }
+      const res = await fetch(`${API_BASE}/api/booking-request`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      })
+      const data = await res.json().catch(() => ({}))
+      if (!res.ok) {
+        setSubmitError(data?.error || data?.detail || `Request failed (${res.status})`)
+        return
+      }
+      router.push("/thank-you")
+    } catch (err) {
+      setSubmitError(err instanceof Error ? err.message : "Something went wrong. Please try again.")
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -265,7 +312,9 @@ export function HeroSection() {
                       <Input
                         placeholder={t("enter_airport")}
                         className="pl-10 h-12 bg-secondary/50 border-border focus:border-primary"
-                        required
+                        value={airportName}
+                        onChange={(e) => setAirportName(e.target.value)}
+                        required={tripType === "airport"}
                       />
                     </div>
                   </>
@@ -276,6 +325,8 @@ export function HeroSection() {
                       <Input
                         placeholder={t("enter_city")}
                         className="pl-10 h-12 bg-secondary/50 border-border focus:border-primary"
+                        value={fromCity}
+                        onChange={(e) => setFromCity(e.target.value)}
                         required
                       />
                     </div>
@@ -290,6 +341,8 @@ export function HeroSection() {
                       <Input
                         placeholder={t("enter_city")}
                         className="pl-10 h-12 bg-secondary/50 border-border focus:border-primary"
+                        value={toCity}
+                        onChange={(e) => setToCity(e.target.value)}
                         required
                       />
                     </div>
@@ -302,6 +355,8 @@ export function HeroSection() {
                     <Input
                       type="date"
                       className="pl-10 h-12 bg-secondary/50 border-border focus:border-primary"
+                      value={date}
+                      onChange={(e) => setDate(e.target.value)}
                       required
                     />
                   </div>
@@ -309,8 +364,9 @@ export function HeroSection() {
                     <Clock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                     <Input
                       type="time"
-                      defaultValue="10:00"
                       className="pl-10 h-12 bg-secondary/50 border-border focus:border-primary"
+                      value={time}
+                      onChange={(e) => setTime(e.target.value)}
                       required
                     />
                   </div>
@@ -323,6 +379,8 @@ export function HeroSection() {
                       type="date"
                       placeholder="Return Date"
                       className="pl-10 h-12 bg-secondary/50 border-border focus:border-primary"
+                      value={returnDate}
+                      onChange={(e) => setReturnDate(e.target.value)}
                       required
                     />
                   </div>
@@ -332,11 +390,17 @@ export function HeroSection() {
                   <div className="bg-secondary/50 rounded-lg p-4">
                     <p className="text-sm text-muted-foreground mb-2">{t("select_package")}</p>
                     <div className="grid grid-cols-3 gap-2">
-                      {["4 hrs / 40 km", "8 hrs / 80 km", "12 hrs / 120 km"].map((pkg) => (
+                      {LOCAL_PACKAGES.map((pkg) => (
                         <button
                           type="button"
                           key={pkg}
-                          className="text-xs md:text-sm py-2 px-3 rounded-lg border border-border hover:border-primary hover:bg-primary/5 transition-colors"
+                          onClick={() => setLocalPackage(pkg)}
+                          className={cn(
+                            "text-xs md:text-sm py-2 px-3 rounded-lg border transition-colors",
+                            localPackage === pkg
+                              ? "border-primary bg-primary/10 text-primary"
+                              : "border-border hover:border-primary hover:bg-primary/5"
+                          )}
                         >
                           {pkg}
                         </button>
@@ -352,6 +416,8 @@ export function HeroSection() {
                     type="tel"
                     placeholder={t("enter_phone")}
                     className="pl-10 h-12 bg-secondary/50 border-border focus:border-primary"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
                     required
                   />
                 </div>
@@ -393,11 +459,24 @@ export function HeroSection() {
                   )}
                 </div>
 
+                {submitError && (
+                  <p className="text-sm text-destructive text-center">{submitError}</p>
+                )}
                 <Button 
                   type="submit"
-                  className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-lg"
+                  disabled={isSubmitting}
+                  className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-lg disabled:opacity-70"
                 >
-                  {t("submit_request")} <ArrowRight className="ml-2 h-5 w-5" />
+                  {isSubmitting ? (
+                    <span className="flex items-center gap-2">
+                      <span className="h-4 w-4 animate-spin rounded-full border-2 border-primary-foreground border-t-transparent" />
+                      Sending…
+                    </span>
+                  ) : (
+                    <>
+                      {t("submit_request")} <ArrowRight className="ml-2 h-5 w-5" />
+                    </>
+                  )}
                 </Button>
               </div>
             </form>

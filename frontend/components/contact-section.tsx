@@ -8,9 +8,13 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Send, User, Phone, Mail, MessageSquare, CheckCircle2, X } from "lucide-react"
 
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"
+
 export function ContactSection() {
   const { t } = useLanguage()
   const [showPopup, setShowPopup] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -18,10 +22,28 @@ export function ContactSection() {
     message: ""
   })
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setShowPopup(true)
-    setFormData({ name: "", phone: "", email: "", message: "" })
+    setSubmitError(null)
+    setIsSubmitting(true)
+    try {
+      const res = await fetch(`${API_BASE}/api/contact-request`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      })
+      const data = await res.json().catch(() => ({}))
+      if (!res.ok) {
+        setSubmitError(data?.error || data?.detail || `Request failed (${res.status})`)
+        return
+      }
+      setShowPopup(true)
+      setFormData({ name: "", phone: "", email: "", message: "" })
+    } catch (err) {
+      setSubmitError(err instanceof Error ? err.message : "Something went wrong. Please try again.")
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -109,11 +131,24 @@ export function ContactSection() {
                   />
                 </div>
 
+                {submitError && (
+                  <p className="text-sm text-destructive text-center">{submitError}</p>
+                )}
                 <Button
                   type="submit"
-                  className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-lg"
+                  disabled={isSubmitting}
+                  className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-lg disabled:opacity-70"
                 >
-                  {t("submit")} <Send className="ml-2 h-5 w-5" />
+                  {isSubmitting ? (
+                    <span className="flex items-center gap-2">
+                      <span className="h-4 w-4 animate-spin rounded-full border-2 border-primary-foreground border-t-transparent" />
+                      Sending…
+                    </span>
+                  ) : (
+                    <>
+                      {t("submit")} <Send className="ml-2 h-5 w-5" />
+                    </>
+                  )}
                 </Button>
               </form>
             </div>
