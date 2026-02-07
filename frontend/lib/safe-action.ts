@@ -1,6 +1,5 @@
 import { createServerActionProcedure } from "zsa";
-import { getAdminSession } from "./actions/auth";
-import { AdminSession } from "./actions/auth";
+import { getAdminSession, AdminSession } from "./auth";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function shapeErrors({ err }: any) {
@@ -33,3 +32,5 @@ export const authenticatedAction = createServerActionProcedure()
         }
         return { session };
     });
+
+export type { AdminSession };

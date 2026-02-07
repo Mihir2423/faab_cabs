@@ -39,7 +39,7 @@ import {
 } from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getOrdersAction, OrderFilters, OrderWithDetails, OrdersResponse, updateOrderStatusAction } from "@/lib/actions/orders";
-import { AdminSession } from "@/lib/actions/auth";
+import { AdminSession } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 

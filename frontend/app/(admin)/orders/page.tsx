@@ -1,4 +1,4 @@
-import { getAdminSession } from "@/lib/actions/auth";
+import { getAdminSession } from "@/lib/auth";
 import OrdersPageClient from "./page-client";
 
 export default async function OrdersPage() {

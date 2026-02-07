@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useServerAction } from "zsa-react";
 import { logoutAction } from "@/lib/actions/auth";
-import { AdminSession } from "@/lib/actions/auth";
+import { AdminSession } from "@/lib/auth";
 import { toast } from "sonner";
 
 interface AdminHeaderProps {
@@ -31,7 +31,7 @@ export function AdminHeader({ session }: AdminHeaderProps) {
       return;
     }
     toast.success("Logged out successfully");
-    router.push("/admin-auth");
+    router.push("/");
     router.refresh();
   };
 
