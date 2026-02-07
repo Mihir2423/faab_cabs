@@ -2,7 +2,7 @@
 
 import React, { useState } from "react"
 import { useLanguage } from "@/contexts/language-context"
-import { Plane, Calendar, Clock, Phone, Car, ChevronDown, ArrowRight } from "lucide-react"
+import { Plane, Calendar, Clock, Phone, Car, ChevronDown, ArrowRight, MapPin } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
@@ -28,6 +28,7 @@ export function AirportForm({ onSubmit }: AirportFormProps) {
   const { execute, isPending } = useServerAction(createBookingAction)
   const [airportType, setAirportType] = useState<AirportType>("pickup")
   const [airportName, setAirportName] = useState("")
+  const [city, setCity] = useState("")
   const [date, setDate] = useState("")
   const [time, setTime] = useState("10:00")
   const [phone, setPhone] = useState("")
@@ -38,20 +39,20 @@ export function AirportForm({ onSubmit }: AirportFormProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    
+
     const carDisplay = selectedCarData ? (language === "hi" ? selectedCarData.nameHi : selectedCarData.name) : ""
-    
+
     const [result, error] = await execute({
       rentalType: "AIRPORT",
       transferType: airportType === "pickup" ? "PICKUP_FROM_AIRPORT" : "DROP_TO_AIRPORT",
       airportName: airportName,
-      city: "", // This could be added as a field in the form later
+      city: city,
       pickupDate: date,
       pickupTime: time,
       phoneNumber: phone,
       carType: carDisplay || selectedCar,
     })
-    
+
     if (error) {
       toast.error("Failed to create booking", {
         description: error.message,
@@ -64,21 +65,23 @@ export function AirportForm({ onSubmit }: AirportFormProps) {
       toast.success("Booking created successfully!", {
         description: `Your booking ID is: ${result.bookingId}`,
       })
-      
+
       // Reset form
       setAirportType("pickup")
       setAirportName("")
+      setCity("")
       setDate("")
       setTime("10:00")
       setPhone("")
       setSelectedCar("")
-      
+
       // Call parent onSubmit if provided
       if (onSubmit) {
         onSubmit({
           tripType: "airport",
           airportType,
           airportName,
+          city,
           date,
           time,
           phone,
@@ -126,6 +129,17 @@ export function AirportForm({ onSubmit }: AirportFormProps) {
             className="pl-10 h-12 bg-secondary/50 border-border focus:border-primary"
             value={airportName}
             onChange={(e) => setAirportName(e.target.value)}
+            required
+          />
+        </div>
+
+        <div className="relative">
+          <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-primary" />
+          <Input
+            placeholder={airportType === "pickup" ? t("enter_destination_city") : t("enter_city")}
+            className="pl-10 h-12 bg-secondary/50 border-border focus:border-primary"
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
             required
           />
         </div>
