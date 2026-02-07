@@ -89,7 +89,7 @@ export function HeroSection() {
   return (
     <section className="relative py-12 md:py-20 overflow-hidden">
       {/* Background Image */}
-      <div 
+      <div
         className="absolute inset-0 z-0"
         style={{
           backgroundImage: 'url(/hero_section_2.png)',
@@ -98,13 +98,13 @@ export function HeroSection() {
           backgroundRepeat: 'no-repeat',
         }}
       />
-      
+
       {/* Gradient Overlay - fades to black on right, with overall transparency */}
       <div className="absolute inset-0 z-0 bg-gradient-to-r from-background/80 via-background/60 to-black/90" />
-      
+
       {/* Additional overlay for text readability */}
       <div className="absolute inset-0 z-0 bg-background/5" />
-      
+
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left Content */}
@@ -190,13 +190,13 @@ export function HeroSection() {
                   </div>
                 </div>
               </div>
-              
+
               {/* Text box below star */}
               <div className="mt-2 bg-red-500 text-white text-[11px] font-bold px-2 py-1 rounded whitespace-nowrap shadow-md z-30">
                 First Booking
               </div>
             </div>
-            
+
             <form onSubmit={handleSubmit}>
               {/* Trip Type Tabs */}
               <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
@@ -339,7 +339,7 @@ export function HeroSection() {
                       </div>
                       <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-accent" />
                       <Input
-                        placeholder={t("enter_city")}
+                        placeholder={t("enter_destination_city")}
                         className="pl-10 h-12 bg-secondary/50 border-border focus:border-primary"
                         value={toCity}
                         onChange={(e) => setToCity(e.target.value)}
@@ -431,14 +431,14 @@ export function HeroSection() {
                     className="w-full pl-10 pr-10 h-12 bg-secondary/50 border border-border rounded-md text-left flex items-center justify-between focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
                   >
                     <span className={selectedCar ? "text-foreground" : "text-muted-foreground"}>
-                      {selectedCarData 
+                      {selectedCarData
                         ? `${language === "hi" ? selectedCarData.nameHi : selectedCarData.name} (${t("max_passengers")}: ${selectedCarData.maxPassengers})`
                         : t("select_car")
                       }
                     </span>
                     <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                   </button>
-                  
+
                   {showCarDropdown && (
                     <div className="absolute top-full left-0 right-0 mt-1 bg-card border border-border rounded-lg shadow-lg z-20 max-h-60 overflow-y-auto">
                       {carTypes.map((car) => (
@@ -462,7 +462,7 @@ export function HeroSection() {
                 {submitError && (
                   <p className="text-sm text-destructive text-center">{submitError}</p>
                 )}
-                <Button 
+                <Button
                   type="submit"
                   disabled={isSubmitting}
                   className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-lg disabled:opacity-70"
