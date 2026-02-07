@@ -36,7 +36,7 @@ export function HeroSection() {
       />
 
       {/* Gradient Overlay - fades to black on right, with overall transparency */}
-      <div className="absolute inset-0 z-0 bg-gradient-to-r from-background/80 via-background/60 to-black/90" />
+      <div className="absolute inset-0 z-0 bg-linear-to-r from-background/80 via-background/60 to-black/90" />
 
       {/* Additional overlay for text readability */}
       <div className="absolute inset-0 z-0 bg-background/5" />
@@ -55,7 +55,7 @@ export function HeroSection() {
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 text-balance">
               {t("hero_title")} <span className="text-accent">{t("hero_highlight")}</span> {t("hero_title_end")}
             </h1>
-            <div className="flex items-center justify-center lg:justify-start gap-2 mb-4">
+            <div className="flex max-sm:flex-col items-center justify-center lg:justify-start gap-2 mb-4">
               <Image
                 src="/bihar_govt.png"
                 alt="Bihar Government Logo"
@@ -96,14 +96,14 @@ export function HeroSection() {
           </div>
 
           {/* Booking Form */}
-          <div id="booking-form" className="bg-card rounded-2xl shadow-xl p-6 md:p-8 border border-border relative">
+          <div id="booking-form" className="bg-card rounded-2xl shadow-xl p-4 sm:p-6 md:p-8 border border-border relative">
             {/* Discount Badge - Starburst */}
-            <div className="absolute -top-4 -right-4 z-20 flex flex-col items-center">
+            <div className="absolute -top-3 -right-3 sm:-top-4 sm:-right-4 z-20 flex flex-col items-center">
               {/* Grouped Star Container */}
               <div className="relative -mt-2">
                 {/* Outer stroke layer */}
                 <div
-                  className="w-[116px] h-[116px] bg-red-700 absolute top-0 left-1/2 -translate-x-1/2"
+                  className="sm:w-29 h-15 w-15 sm:sm:h-29 bg-red-700 absolute top-0 left-1/2 -translate-x-1/2"
                   style={{
                     clipPath:
                       'polygon(50% 0%, 60% 10%, 75% 5%, 80% 20%, 95% 25%, 85% 40%, 100% 50%, 85% 60%, 95% 75%, 80% 80%, 75% 95%, 60% 90%, 50% 100%, 40% 90%, 25% 95%, 20% 80%, 5% 75%, 15% 60%, 0% 50%, 15% 40%, 5% 25%, 20% 20%, 25% 5%, 40% 10%)',
@@ -112,7 +112,7 @@ export function HeroSection() {
                 />
                 {/* Inner fill layer */}
                 <div
-                  className="w-28 h-28 bg-red-500 flex items-center justify-center text-white relative"
+                  className="h-14 w-14 sm:w-28 sm:h-28 bg-red-500 flex items-center justify-center text-white relative"
                   style={{
                     clipPath:
                       'polygon(50% 0%, 60% 10%, 75% 5%, 80% 20%, 95% 25%, 85% 40%, 100% 50%, 85% 60%, 95% 75%, 80% 80%, 75% 95%, 60% 90%, 50% 100%, 40% 90%, 25% 95%, 20% 80%, 5% 75%, 15% 60%, 0% 50%, 15% 40%, 5% 25%, 20% 20%, 25% 5%, 40% 10%)',
@@ -120,9 +120,9 @@ export function HeroSection() {
                   }}
                 >
                   <div className="text-center font-extrabold">
-                    <div className="text-xs">upto</div>
-                    <div className="text-xl">50%</div>
-                    <div className="text-xs">OFF</div>
+                    <div className="text-xs sm:text-xs">upto</div>
+                    <div className="text-sm sm:text-xl">50%</div>
+                    <div className="text-xs sm:text-xs">OFF</div>
                   </div>
                 </div>
               </div>
@@ -135,7 +135,7 @@ export function HeroSection() {
 
             <div>
               {/* Trip Type Tabs */}
-              <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
+              <div className="flex flex-wrap gap-2 mb-6 overflow-x-auto pb-2">
                 <button
                   type="button"
                   onClick={() => setTripType("outstation")}
