@@ -6,6 +6,9 @@ import { MapPin, Calendar, Clock, RotateCcw, Phone, Car, ChevronDown, ArrowRight
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
+import { useServerAction } from "zsa-react"
+import { createBookingAction } from "@/lib/actions/bookings"
+import { toast } from "sonner"
 
 const carTypes = [
   { id: "sedan", name: "Sedan", nameHi: "सेडान", maxPassengers: 4 },
@@ -17,11 +20,12 @@ const carTypes = [
 type OutstationType = "oneway" | "roundtrip"
 
 interface OutstationFormProps {
-  onSubmit: (values: Record<string, unknown>) => void
+  onSubmit?: (values: Record<string, unknown>) => void
 }
 
 export function OutstationForm({ onSubmit }: OutstationFormProps) {
   const { t, language } = useLanguage()
+  const { execute, isPending } = useServerAction(createBookingAction)
   const [outstationType, setOutstationType] = useState<OutstationType>("oneway")
   const [fromCity, setFromCity] = useState("")
   const [toCity, setToCity] = useState("")
@@ -31,30 +35,64 @@ export function OutstationForm({ onSubmit }: OutstationFormProps) {
   const [phone, setPhone] = useState("")
   const [selectedCar, setSelectedCar] = useState("")
   const [showCarDropdown, setShowCarDropdown] = useState(false)
-  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const selectedCarData = carTypes.find(car => car.id === selectedCar)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setIsSubmitting(true)
     
     const carDisplay = selectedCarData ? (language === "hi" ? selectedCarData.nameHi : selectedCarData.name) : ""
-    const values = {
-      tripType: "outstation",
-      outstationType,
-      fromCity,
-      toCity,
-      date,
-      time,
-      returnDate: outstationType === "roundtrip" ? returnDate : undefined,
-      phone,
-      carType: carDisplay || selectedCar,
-    }
     
-    console.log("Outstation Form Values:", values)
-    onSubmit(values)
-    setIsSubmitting(false)
+    const [result, error] = await execute({
+      rentalType: "OUTSTATION",
+      tripType: outstationType === "oneway" ? "ONE_WAY" : "ROUND_TRIP",
+      pickupCity: fromCity,
+      destinationCity: toCity,
+      pickupDate: date,
+      pickupTime: time,
+      dropDate: outstationType === "roundtrip" ? returnDate : undefined,
+      phoneNumber: phone,
+      carType: carDisplay || selectedCar,
+    })
+    
+    if (error) {
+      toast.error("Failed to create booking", {
+        description: error.message,
+      })
+      console.error(error)
+      return
+    }
+
+    if (result?.success) {
+      toast.success("Booking created successfully!", {
+        description: `Your booking ID is: ${result.bookingId}`,
+      })
+      
+      // Reset form
+      setFromCity("")
+      setToCity("")
+      setDate("")
+      setTime("10:00")
+      setReturnDate("")
+      setPhone("")
+      setSelectedCar("")
+      
+      // Call parent onSubmit if provided
+      if (onSubmit) {
+        onSubmit({
+          tripType: "outstation",
+          outstationType,
+          fromCity,
+          toCity,
+          date,
+          time,
+          returnDate: outstationType === "roundtrip" ? returnDate : undefined,
+          phone,
+          carType: carDisplay || selectedCar,
+          bookingId: result.bookingId,
+        })
+      }
+    }
   }
 
   return (
@@ -205,10 +243,10 @@ export function OutstationForm({ onSubmit }: OutstationFormProps) {
 
         <Button
           type="submit"
-          disabled={isSubmitting}
+          disabled={isPending}
           className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-lg disabled:opacity-70"
         >
-          {isSubmitting ? (
+          {isPending ? (
             <span className="flex items-center gap-2">
               <span className="h-4 w-4 animate-spin rounded-full border-2 border-primary-foreground border-t-transparent" />
               Sending…

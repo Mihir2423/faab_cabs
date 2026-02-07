@@ -134,6 +134,9 @@ importers:
       next-themes:
         specifier: ^0.4.6
         version: 0.4.6(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      pg:
+        specifier: ^8.18.0
+        version: 8.18.0
       react:
         specifier: 19.2.0
         version: 19.2.0
@@ -167,6 +170,12 @@ importers:
       zod:
         specifier: 3.25.76
         version: 3.25.76
+      zsa:
+        specifier: ^0.6.0
+        version: 0.6.0(zod@3.25.76)
+      zsa-react:
+        specifier: ^0.2.3
+        version: 0.2.3(react@19.2.0)(zod@3.25.76)
     devDependencies:
       '@tailwindcss/postcss':
         specifier: ^4.1.9
@@ -2142,6 +2151,17 @@ packages:
   zod@3.25.76:
     resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
 
+  zsa-react@0.2.3:
+    resolution: {integrity: sha512-THCoIIhtEU3jXTrNBM/PBc0PyHCekizSGEc+fg0LGo1NM1J02LFQN7ICR948X25IjtkZdvxUZmT0+M73GG8eEw==}
+    peerDependencies:
+      react: ^18.0.0 || ^19.0.0
+      zod: ^3.23.5
+
+  zsa@0.6.0:
+    resolution: {integrity: sha512-Pq3X4T0dna5s4dIevYOJiRdM3DUHRvEHS2q1AH/bvkPSh640u+9veVj5zmzmbL0A6cpXMYagwKsR4keGOc0jPQ==}
+    peerDependencies:
+      zod: ^3.23.5
+
 snapshots:
 
   '@alloc/quick-lru@5.2.0': {}
@@ -4003,3 +4023,13 @@ snapshots:
       graphmatch: 1.1.0
 
   zod@3.25.76: {}
+
+  zsa-react@0.2.3(react@19.2.0)(zod@3.25.76):
+    dependencies:
+      react: 19.2.0
+      zod: 3.25.76
+      zsa: 0.6.0(zod@3.25.76)
+
+  zsa@0.6.0(zod@3.25.76):
+    dependencies:
+      zod: 3.25.76

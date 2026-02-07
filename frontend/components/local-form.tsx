@@ -6,6 +6,9 @@ import { MapPin, Calendar, Clock, Phone, Car, ChevronDown, ArrowRight } from "lu
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
+import { useServerAction } from "zsa-react"
+import { createBookingAction } from "@/lib/actions/bookings"
+import { toast } from "sonner"
 
 const carTypes = [
   { id: "sedan", name: "Sedan", nameHi: "सेडान", maxPassengers: 4 },
@@ -17,11 +20,12 @@ const carTypes = [
 const LOCAL_PACKAGES = ["4 hrs / 40 km", "8 hrs / 80 km", "12 hrs / 120 km"] as const
 
 interface LocalFormProps {
-  onSubmit: (values: Record<string, unknown>) => void
+  onSubmit?: (values: Record<string, unknown>) => void
 }
 
 export function LocalForm({ onSubmit }: LocalFormProps) {
   const { t, language } = useLanguage()
+  const { execute, isPending } = useServerAction(createBookingAction)
   const [fromCity, setFromCity] = useState("")
   const [date, setDate] = useState("")
   const [time, setTime] = useState("10:00")
@@ -29,28 +33,60 @@ export function LocalForm({ onSubmit }: LocalFormProps) {
   const [phone, setPhone] = useState("")
   const [selectedCar, setSelectedCar] = useState("")
   const [showCarDropdown, setShowCarDropdown] = useState(false)
-  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const selectedCarData = carTypes.find(car => car.id === selectedCar)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setIsSubmitting(true)
     
     const carDisplay = selectedCarData ? (language === "hi" ? selectedCarData.nameHi : selectedCarData.name) : ""
-    const values = {
-      tripType: "local",
-      fromCity,
-      date,
-      time,
-      localPackage,
-      phone,
-      carType: carDisplay || selectedCar,
-    }
     
-    console.log("Local Form Values:", values)
-    onSubmit(values)
-    setIsSubmitting(false)
+    const [result, error] = await execute({
+      rentalType: "LOCAL",
+      pickupCity: fromCity,
+      destinationCity: fromCity, // For local rentals, pickup and destination are the same city
+      pickupDate: date,
+      pickupTime: time,
+      packageType: localPackage,
+      phoneNumber: phone,
+      carType: carDisplay || selectedCar,
+    })
+    
+    if (error) {
+      toast.error("Failed to create booking", {
+        description: error.message,
+      })
+      console.error(error)
+      return
+    }
+
+    if (result?.success) {
+      toast.success("Booking created successfully!", {
+        description: `Your booking ID is: ${result.bookingId}`,
+      })
+      
+      // Reset form
+      setFromCity("")
+      setDate("")
+      setTime("10:00")
+      setLocalPackage("")
+      setPhone("")
+      setSelectedCar("")
+      
+      // Call parent onSubmit if provided
+      if (onSubmit) {
+        onSubmit({
+          tripType: "local",
+          fromCity,
+          date,
+          time,
+          localPackage,
+          phone,
+          carType: carDisplay || selectedCar,
+          bookingId: result.bookingId,
+        })
+      }
+    }
   }
 
   return (
@@ -161,10 +197,10 @@ export function LocalForm({ onSubmit }: LocalFormProps) {
 
         <Button
           type="submit"
-          disabled={isSubmitting}
+          disabled={isPending}
           className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-lg disabled:opacity-70"
         >
-          {isSubmitting ? (
+          {isPending ? (
             <span className="flex items-center gap-2">
               <span className="h-4 w-4 animate-spin rounded-full border-2 border-primary-foreground border-t-transparent" />
               Sending…

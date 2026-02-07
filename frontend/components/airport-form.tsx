@@ -6,6 +6,9 @@ import { Plane, Calendar, Clock, Phone, Car, ChevronDown, ArrowRight } from "luc
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
+import { useServerAction } from "zsa-react"
+import { createBookingAction } from "@/lib/actions/bookings"
+import { toast } from "sonner"
 
 const carTypes = [
   { id: "sedan", name: "Sedan", nameHi: "सेडान", maxPassengers: 4 },
@@ -17,11 +20,12 @@ const carTypes = [
 type AirportType = "pickup" | "drop"
 
 interface AirportFormProps {
-  onSubmit: (values: Record<string, unknown>) => void
+  onSubmit?: (values: Record<string, unknown>) => void
 }
 
 export function AirportForm({ onSubmit }: AirportFormProps) {
   const { t, language } = useLanguage()
+  const { execute, isPending } = useServerAction(createBookingAction)
   const [airportType, setAirportType] = useState<AirportType>("pickup")
   const [airportName, setAirportName] = useState("")
   const [date, setDate] = useState("")
@@ -29,28 +33,60 @@ export function AirportForm({ onSubmit }: AirportFormProps) {
   const [phone, setPhone] = useState("")
   const [selectedCar, setSelectedCar] = useState("")
   const [showCarDropdown, setShowCarDropdown] = useState(false)
-  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const selectedCarData = carTypes.find(car => car.id === selectedCar)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setIsSubmitting(true)
     
     const carDisplay = selectedCarData ? (language === "hi" ? selectedCarData.nameHi : selectedCarData.name) : ""
-    const values = {
-      tripType: "airport",
-      airportType,
-      airportName,
-      date,
-      time,
-      phone,
-      carType: carDisplay || selectedCar,
-    }
     
-    console.log("Airport Form Values:", values)
-    onSubmit(values)
-    setIsSubmitting(false)
+    const [result, error] = await execute({
+      rentalType: "AIRPORT",
+      transferType: airportType === "pickup" ? "PICKUP_FROM_AIRPORT" : "DROP_TO_AIRPORT",
+      airportName: airportName,
+      city: "", // This could be added as a field in the form later
+      pickupDate: date,
+      pickupTime: time,
+      phoneNumber: phone,
+      carType: carDisplay || selectedCar,
+    })
+    
+    if (error) {
+      toast.error("Failed to create booking", {
+        description: error.message,
+      })
+      console.error(error)
+      return
+    }
+
+    if (result?.success) {
+      toast.success("Booking created successfully!", {
+        description: `Your booking ID is: ${result.bookingId}`,
+      })
+      
+      // Reset form
+      setAirportType("pickup")
+      setAirportName("")
+      setDate("")
+      setTime("10:00")
+      setPhone("")
+      setSelectedCar("")
+      
+      // Call parent onSubmit if provided
+      if (onSubmit) {
+        onSubmit({
+          tripType: "airport",
+          airportType,
+          airportName,
+          date,
+          time,
+          phone,
+          carType: carDisplay || selectedCar,
+          bookingId: result.bookingId,
+        })
+      }
+    }
   }
 
   return (
@@ -167,10 +203,10 @@ export function AirportForm({ onSubmit }: AirportFormProps) {
 
         <Button
           type="submit"
-          disabled={isSubmitting}
+          disabled={isPending}
           className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-lg disabled:opacity-70"
         >
-          {isSubmitting ? (
+          {isPending ? (
             <span className="flex items-center gap-2">
               <span className="h-4 w-4 animate-spin rounded-full border-2 border-primary-foreground border-t-transparent" />
               Sending…
