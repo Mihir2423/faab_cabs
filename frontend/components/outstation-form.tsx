@@ -1,7 +1,8 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { useLanguage } from "@/contexts/language-context"
+import { useBookingForm } from "@/contexts/booking-form-context"
 import { MapPin, Calendar, Clock, RotateCcw, Phone, Car, ChevronDown, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -26,6 +27,7 @@ interface OutstationFormProps {
 
 export function OutstationForm({ onSubmit }: OutstationFormProps) {
   const { t, language } = useLanguage()
+  const { prefilledData, clearPrefilledData } = useBookingForm()
   const router = useRouter()
   const { execute, isPending } = useServerAction(createBookingAction)
   const [outstationType, setOutstationType] = useState<OutstationType>("oneway")
@@ -40,11 +42,26 @@ export function OutstationForm({ onSubmit }: OutstationFormProps) {
 
   const selectedCarData = carTypes.find(car => car.id === selectedCar)
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  useEffect(() => {
+    if (prefilledData) {
+      if (prefilledData.fromCity) {
+        setFromCity(prefilledData.fromCity)
+      }
+      if (prefilledData.toCity) {
+        setToCity(prefilledData.toCity)
+      }
+      if (prefilledData.tripType) {
+        setOutstationType(prefilledData.tripType)
+      }
+      clearPrefilledData()
+    }
+  }, [prefilledData, clearPrefilledData])
+
+  const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault()
-    
+
     const carDisplay = selectedCarData ? (language === "hi" ? selectedCarData.nameHi : selectedCarData.name) : ""
-    
+
     const [result, error] = await execute({
       rentalType: "OUTSTATION",
       tripType: outstationType === "oneway" ? "ONE_WAY" : "ROUND_TRIP",
@@ -56,7 +73,7 @@ export function OutstationForm({ onSubmit }: OutstationFormProps) {
       phoneNumber: phone,
       carType: carDisplay || selectedCar,
     })
-    
+
     if (error) {
       toast.error("Failed to create booking", {
         description: error.message,

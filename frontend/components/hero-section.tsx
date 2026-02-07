@@ -96,7 +96,7 @@ export function HeroSection() {
           </div>
 
           {/* Booking Form */}
-          <div className="bg-card rounded-2xl shadow-xl p-6 md:p-8 border border-border relative">
+          <div id="booking-form" className="bg-card rounded-2xl shadow-xl p-6 md:p-8 border border-border relative">
             {/* Discount Badge - Starburst */}
             <div className="absolute -top-4 -right-4 z-20 flex flex-col items-center">
               {/* Grouped Star Container */}
