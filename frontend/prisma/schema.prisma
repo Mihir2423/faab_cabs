@@ -36,6 +36,11 @@ enum BookingStatus {
   CANCELLED
 }
 
+enum AdminAccess {
+  READ
+  WRITE
+}
+
 
 model Booking {
   id            String        @id @default(cuid())
@@ -91,4 +96,13 @@ model AirportBooking {
   transferType    AirportTransferType
   airportName     String
   city            String              // Serves as pickup city (if drop to airport) or drop city (if pickup from)
+}
+
+model Admin {
+  id        String      @id @default(cuid())
+  username  String      @unique
+  password  String      // Hashed password
+  access    AdminAccess @default(READ)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
 }

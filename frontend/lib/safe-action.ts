@@ -1,4 +1,6 @@
 import { createServerActionProcedure } from "zsa";
+import { getAdminSession } from "./actions/auth";
+import { AdminSession } from "./actions/auth";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function shapeErrors({ err }: any) {
@@ -20,4 +22,14 @@ function shapeErrors({ err }: any) {
 export const unauthenticatedAction = createServerActionProcedure()
     .experimental_shapeError(shapeErrors)
     .handler(async () => {
+    });
+
+export const authenticatedAction = createServerActionProcedure()
+    .experimental_shapeError(shapeErrors)
+    .handler(async (): Promise<{ session: AdminSession }> => {
+        const session = await getAdminSession();
+        if (!session) {
+            throw new Error("Unauthorized");
+        }
+        return { session };
     });
