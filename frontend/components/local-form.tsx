@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils"
 import { useServerAction } from "zsa-react"
 import { createBookingAction } from "@/lib/actions/bookings"
 import { toast } from "sonner"
+import { useRouter } from "next/navigation"
 
 const carTypes = [
   { id: "sedan", name: "Sedan", nameHi: "सेडान", maxPassengers: 4 },
@@ -25,6 +26,7 @@ interface LocalFormProps {
 
 export function LocalForm({ onSubmit }: LocalFormProps) {
   const { t, language } = useLanguage()
+  const router = useRouter()
   const { execute, isPending } = useServerAction(createBookingAction)
   const [fromCity, setFromCity] = useState("")
   const [date, setDate] = useState("")
@@ -61,31 +63,7 @@ export function LocalForm({ onSubmit }: LocalFormProps) {
     }
 
     if (result?.success) {
-      toast.success("Booking created successfully!", {
-        description: `Your booking ID is: ${result.bookingId}`,
-      })
-      
-      // Reset form
-      setFromCity("")
-      setDate("")
-      setTime("10:00")
-      setLocalPackage("")
-      setPhone("")
-      setSelectedCar("")
-      
-      // Call parent onSubmit if provided
-      if (onSubmit) {
-        onSubmit({
-          tripType: "local",
-          fromCity,
-          date,
-          time,
-          localPackage,
-          phone,
-          carType: carDisplay || selectedCar,
-          bookingId: result.bookingId,
-        })
-      }
+      router.push(`/thank-you?bookingId=${result.bookingId}`)
     }
   }
 

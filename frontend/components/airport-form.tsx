@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils"
 import { useServerAction } from "zsa-react"
 import { createBookingAction } from "@/lib/actions/bookings"
 import { toast } from "sonner"
+import { useRouter } from "next/navigation"
 
 const carTypes = [
   { id: "sedan", name: "Sedan", nameHi: "सेडान", maxPassengers: 4 },
@@ -25,6 +26,7 @@ interface AirportFormProps {
 
 export function AirportForm({ onSubmit }: AirportFormProps) {
   const { t, language } = useLanguage()
+  const router = useRouter()
   const { execute, isPending } = useServerAction(createBookingAction)
   const [airportType, setAirportType] = useState<AirportType>("pickup")
   const [airportName, setAirportName] = useState("")
@@ -62,33 +64,7 @@ export function AirportForm({ onSubmit }: AirportFormProps) {
     }
 
     if (result?.success) {
-      toast.success("Booking created successfully!", {
-        description: `Your booking ID is: ${result.bookingId}`,
-      })
-
-      // Reset form
-      setAirportType("pickup")
-      setAirportName("")
-      setCity("")
-      setDate("")
-      setTime("10:00")
-      setPhone("")
-      setSelectedCar("")
-
-      // Call parent onSubmit if provided
-      if (onSubmit) {
-        onSubmit({
-          tripType: "airport",
-          airportType,
-          airportName,
-          city,
-          date,
-          time,
-          phone,
-          carType: carDisplay || selectedCar,
-          bookingId: result.bookingId,
-        })
-      }
+      router.push(`/thank-you?bookingId=${result.bookingId}`)
     }
   }
 

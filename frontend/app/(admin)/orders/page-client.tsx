@@ -38,8 +38,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { getOrdersAction, OrderFilters, OrderWithDetails, OrdersResponse, updateOrderStatusAction } from "@/lib/actions/orders";
-import { AdminSession } from "@/lib/auth";
+import { getOrdersAction, type OrderFilters, type OrderWithDetails, type OrdersResponse, updateOrderStatusAction } from "@/lib/actions/orders";
+import type { AdminSession } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
@@ -86,12 +86,12 @@ export default function OrdersPageClient({ session }: OrdersPageClientProps) {
       pickupDateFrom: pickupDateFrom?.toISOString().split("T")[0],
       pickupDateTo: pickupDateTo?.toISOString().split("T")[0],
     });
-    
+
     if (error) {
       console.error("Failed to fetch orders:", error);
       return;
     }
-    
+
     if (result) {
       setData(result);
     }
@@ -143,7 +143,9 @@ export default function OrdersPageClient({ session }: OrdersPageClientProps) {
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold">Orders</h1>
         <div className="flex items-center gap-4">
-          <Badge variant="outline" className="text-xs">
+          <Badge variant="outline" className={cn("text-xs h-9 bg-green-500 text-white font-bold", {
+            "bg-yellow-300 text-black": session.access !== 'WRITE'
+          })}>
             Access: {session.access}
           </Badge>
           <Button variant="outline" onClick={clearFilters}>
@@ -208,7 +210,7 @@ export default function OrdersPageClient({ session }: OrdersPageClientProps) {
               <Label>Rental Type</Label>
               <Select
                 value={filters.rentalType || "all"}
-                onValueChange={(value) => 
+                onValueChange={(value) =>
                   handleFilterChange("rentalType", value === "all" ? undefined : value)
                 }
               >
@@ -376,7 +378,7 @@ export default function OrdersPageClient({ session }: OrdersPageClientProps) {
                                   </DropdownMenuItem>
                                 )}
                                 {order.status !== "CANCELLED" && (
-                                  <DropdownMenuItem 
+                                  <DropdownMenuItem
                                     onClick={() => handleStatusUpdate(order.id, "CANCELLED")}
                                     className="text-red-600"
                                   >

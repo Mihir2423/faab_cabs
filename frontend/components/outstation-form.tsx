@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils"
 import { useServerAction } from "zsa-react"
 import { createBookingAction } from "@/lib/actions/bookings"
 import { toast } from "sonner"
+import { useRouter } from "next/navigation"
 
 const carTypes = [
   { id: "sedan", name: "Sedan", nameHi: "सेडान", maxPassengers: 4 },
@@ -25,6 +26,7 @@ interface OutstationFormProps {
 
 export function OutstationForm({ onSubmit }: OutstationFormProps) {
   const { t, language } = useLanguage()
+  const router = useRouter()
   const { execute, isPending } = useServerAction(createBookingAction)
   const [outstationType, setOutstationType] = useState<OutstationType>("oneway")
   const [fromCity, setFromCity] = useState("")
@@ -64,34 +66,7 @@ export function OutstationForm({ onSubmit }: OutstationFormProps) {
     }
 
     if (result?.success) {
-      toast.success("Booking created successfully!", {
-        description: `Your booking ID is: ${result.bookingId}`,
-      })
-      
-      // Reset form
-      setFromCity("")
-      setToCity("")
-      setDate("")
-      setTime("10:00")
-      setReturnDate("")
-      setPhone("")
-      setSelectedCar("")
-      
-      // Call parent onSubmit if provided
-      if (onSubmit) {
-        onSubmit({
-          tripType: "outstation",
-          outstationType,
-          fromCity,
-          toCity,
-          date,
-          time,
-          returnDate: outstationType === "roundtrip" ? returnDate : undefined,
-          phone,
-          carType: carDisplay || selectedCar,
-          bookingId: result.bookingId,
-        })
-      }
+      router.push(`/thank-you?bookingId=${result.bookingId}`)
     }
   }
 
